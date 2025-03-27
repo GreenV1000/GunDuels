@@ -11,17 +11,23 @@ import org.bukkit.inventory.ItemStack;
 public class HitByHook implements Listener {
 
     @EventHandler
-    public void hitByHook(EntityDamageByEntityEvent e) {
-        if (e.getDamager().getType() == EntityType.FISHING_HOOK) {
-            FishHook hook = (FishHook) e.getDamager();
-            Player player = (Player) hook.getShooter();
-            Entity entity = e.getEntity();
-            ItemStack helditem = player.getItemInHand();
-            if (helditem.getItemMeta().hasLore() && helditem.getItemMeta().getLore().contains(ChatColor.WHITE + "This is a hook")) {
-                e.setDamage(8);
-                player.teleport(new Location(player.getWorld(), entity.getLocation().getX(), entity.getLocation().getY(), entity.getLocation().getZ(), player.getLocation().getYaw(), player.getLocation().getPitch()));
-                hook.remove();
-            }
+    public void hitByHook(EntityDamageByEntityEvent event) {
+        if (!(event.getDamager().getType() == EntityType.FISHING_HOOK)) {
+            return;
         }
+
+        FishHook hook = (FishHook) event.getDamager();
+        Player player = (Player) hook.getShooter();
+        Entity entity = event.getEntity();
+        ItemStack helditem = player.getItemInHand();
+
+        if (!helditem.getItemMeta().hasLore() || !helditem.getItemMeta().getLore().contains(ChatColor.WHITE + "This is a hook")) {
+            return;
+        }
+
+        event.setDamage(8);
+        player.teleport(new Location(player.getWorld(), entity.getLocation().getX(), entity.getLocation().getY(), entity.getLocation().getZ(), player.getLocation().getYaw(), player.getLocation().getPitch()));
+        hook.remove();
+
     }
 }

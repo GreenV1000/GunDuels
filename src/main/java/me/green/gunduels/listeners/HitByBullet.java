@@ -12,17 +12,20 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class HitByBullet implements Listener {
 
     @EventHandler
-    public void onProjectileHit(EntityDamageByEntityEvent e) {
-        if (e.getDamager().getType() == EntityType.SNOWBALL) {
-            if (e.getDamager().hasMetadata("isBullet") && e.getDamager().getMetadata("isBullet").get(0).asBoolean()) {
-                e.setDamage(8);
-                e.getEntity().getWorld().playEffect(e.getEntity().getLocation(), Effect.EXPLOSION_HUGE, 1);
-                Snowball sb = (Snowball) e.getDamager();
-                Player shooter = (Player) sb.getShooter();
-
-                shooter.playSound(shooter.getLocation(), Sound.ANVIL_LAND, 5, 1);
-            }
+    public void onProjectileHit(EntityDamageByEntityEvent event) {
+        if (!(event.getDamager().getType() == EntityType.SNOWBALL)) {
+            return;
         }
+
+        if (!event.getDamager().hasMetadata("isBullet") || !event.getDamager().getMetadata("isBullet").get(0).asBoolean()) {
+            return;
+        }
+
+        event.setDamage(8);
+        event.getEntity().getWorld().playEffect(event.getEntity().getLocation(), Effect.EXPLOSION_HUGE, 1);
+        Snowball sb = (Snowball) event.getDamager();
+        Player shooter = (Player) sb.getShooter();
+        shooter.playSound(shooter.getLocation(), Sound.ANVIL_LAND, 5, 1);
     }
 
 }
