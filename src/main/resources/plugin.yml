@@ -1,7 +1,7 @@
 name: GunDuels
 version: '1.0-SNAPSHOT'
 main: me.green.gunduels.GunDuels
-api-version: '1.18'
+author: Green
 commands:
   testprojectile:
     description: Test projectile command
