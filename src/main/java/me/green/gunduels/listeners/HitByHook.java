@@ -1,4 +1,4 @@
-package me.green.gunduels.events;
+package me.green.gunduels.listeners;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -6,8 +6,6 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class HitByHook implements Listener {

@@ -4,9 +4,9 @@ import me.green.gunduels.commands.GiveGun;
 import me.green.gunduels.commands.GiveTpHook;
 import me.green.gunduels.commands.Heal;
 import me.green.gunduels.commands.TestCommand;
-import me.green.gunduels.events.HitByBullet;
-import me.green.gunduels.events.HitByHook;
-import me.green.gunduels.events.ShootGun;
+import me.green.gunduels.listeners.HitByBullet;
+import me.green.gunduels.listeners.HitByHook;
+import me.green.gunduels.listeners.ShootGun;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class GunDuels extends JavaPlugin {
