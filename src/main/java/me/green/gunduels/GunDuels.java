@@ -1,7 +1,6 @@
 package me.green.gunduels;
 
 import me.green.gunduels.commands.GiveGun;
-import me.green.gunduels.commands.GiveTpHook;
 import me.green.gunduels.commands.Heal;
 import me.green.gunduels.commands.TestCommand;
 import me.green.gunduels.listeners.HitByBullet;
@@ -19,7 +18,6 @@ public final class GunDuels extends JavaPlugin {
         getCommand("testprojectile").setExecutor(new TestCommand());
         getCommand("heal").setExecutor(new Heal());
         getCommand("givegun").setExecutor(new GiveGun());
-        getCommand("givetphook").setExecutor(new GiveTpHook());
 
         getServer().getPluginManager().registerEvents(new HitByBullet(), this);
         getServer().getPluginManager().registerEvents(new ShootGun(), this);

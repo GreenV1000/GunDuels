@@ -12,6 +12,3 @@ commands:
   givegun:
     description: Give gun command
     usage: /<command>
-  givetphook:
-    description: Give tp hook command
-    usage: /<command>

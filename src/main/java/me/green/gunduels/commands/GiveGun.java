@@ -1,17 +1,15 @@
 package me.green.gunduels.commands;
 
+import me.green.gunduels.Gun;
+import me.green.gunduels.GunRarity;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class GiveGun implements CommandExecutor{
     @Override
@@ -25,20 +23,24 @@ public class GiveGun implements CommandExecutor{
             sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
             return true;
         }
+        if (args.length < 1) {
+            sender.sendMessage(ChatColor.RED + "Usage: /givegun <Gun>");
+            return true;
+        }
 
-        List<String> lore = new ArrayList<>();
-        lore.add("");
-        lore.add(ChatColor.RED + "This is a gun");
         Player player = (Player) sender;
-
-        ItemStack gun = new ItemStack(Material.IRON_BARDING);
-        ItemMeta meta = gun.getItemMeta();
-        meta.setDisplayName(ChatColor.GOLD + "Gun");
-        meta.setLore(lore);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        gun.setItemMeta(meta);
-
-        player.getInventory().addItem(gun);
-        return true;
+        switch (args[0].toLowerCase()) {
+            case "gun":
+                Gun gun = new Gun(new ItemStack(Material.IRON_BARDING), "Gun", GunRarity.COMMON, "This is a gun");
+                gun.giveGun(player, gun);
+                return true;
+            case "hook":
+                Gun hook = new Gun(new ItemStack(Material.FISHING_ROD), "Hook", GunRarity.ADMIN, "This is a hook");
+                hook.giveGun(player, hook);
+                return true;
+            default:
+                player.sendMessage(ChatColor.RED + "Usage: /givegun <Gun>");
+                return true;
+        }
     }
 }
