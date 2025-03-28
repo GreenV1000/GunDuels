@@ -17,7 +17,7 @@ public class HitByBullet implements Listener {
             return;
         }
 
-        if (!event.getDamager().hasMetadata("isBullet") || !event.getDamager().getMetadata("isBullet").get(0).asBoolean()) {
+        if (!(event.getDamager().hasMetadata("isBullet") && event.getDamager().getMetadata("isBullet").get(0).asBoolean())) {
             return;
         }
 

@@ -21,7 +21,7 @@ public class HitByHook implements Listener {
         Entity entity = event.getEntity();
         ItemStack helditem = player.getItemInHand();
 
-        if (!helditem.getItemMeta().hasLore() || !helditem.getItemMeta().getLore().contains(ChatColor.WHITE + "This is a hook")) {
+        if (!(helditem.getItemMeta().hasLore() && helditem.getItemMeta().getLore().contains(ChatColor.WHITE + "This is a hook"))) {
             return;
         }
 
