@@ -13,6 +13,8 @@ public final class GunDuels extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        instance = this;
+
         getCommand("heal").setExecutor(new Heal());
         getCommand("givegun").setExecutor(new GiveGun());
 

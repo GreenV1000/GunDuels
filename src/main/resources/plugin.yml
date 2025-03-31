@@ -3,9 +3,6 @@ version: '1.0-SNAPSHOT'
 main: me.green.gunduels.GunDuels
 author: Green
 commands:
-  testprojectile:
-    description: Test projectile command
-    usage: /<command>
   heal:
     description: Heal command
     usage: /<command>
