@@ -33,19 +33,18 @@ public class HitByHook implements Listener {
         event.setDamage(8);
         hook.remove();
 
-        Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            player.sendMessage(ChatColor.GREEN + "Teleporting to " + entity.getName() + " in 3 seconds...");
-        }, 20);
+
+        player.sendMessage(ChatColor.GREEN + "Teleporting to " + entity.getName() + " in 3 seconds...");
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             player.sendMessage(ChatColor.GREEN + "Teleporting to " + entity.getName() + " in 2 seconds...");
-        }, 40);
+        }, 20);
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             player.sendMessage(ChatColor.GREEN + "Teleporting to " + entity.getName() + " in 1 second...");
-        }, 60);
+        }, 40);
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             player.sendMessage(ChatColor.GREEN + "Teleporting to " + entity.getName());
             player.teleport(new Location(player.getWorld(), entity.getLocation().getX(), entity.getLocation().getY(), entity.getLocation().getZ(), player.getLocation().getYaw(), player.getLocation().getPitch()));
-        }, 80);
+        }, 60);
 
 
     }

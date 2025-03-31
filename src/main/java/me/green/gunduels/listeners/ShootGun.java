@@ -29,7 +29,7 @@ public class ShootGun implements Listener {
             return;
         }
 
-        if (!(heldItem.hasLore() || !heldItem.getLore().contains(ChatColor.WHITE + "This is a gun"))) {
+        if (!(heldItem.hasLore() && heldItem.getLore().contains(ChatColor.WHITE + "This is a gun"))) {
             return;
         }
 
