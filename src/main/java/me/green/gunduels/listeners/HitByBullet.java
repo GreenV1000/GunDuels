@@ -3,6 +3,7 @@ package me.green.gunduels.listeners;
 import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
@@ -21,8 +22,11 @@ public class HitByBullet implements Listener {
             return;
         }
 
+        LivingEntity entity = (LivingEntity) event.getEntity();
+
         event.setDamage(8);
-        event.getEntity().getWorld().playEffect(event.getEntity().getLocation(), Effect.EXPLOSION_HUGE, 1);
+        entity.getWorld().playEffect(event.getEntity().getLocation(), Effect.EXPLOSION_HUGE, 1);
+        entity.setNoDamageTicks(0);
         Snowball sb = (Snowball) event.getDamager();
         Player shooter = (Player) sb.getShooter();
         shooter.playSound(shooter.getLocation(), Sound.ANVIL_LAND, 5, 1);

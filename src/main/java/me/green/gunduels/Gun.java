@@ -35,7 +35,11 @@ public class Gun {
 
     public void giveGun(Player player, Gun gun) {
         player.getInventory().addItem(gun.item);
-        player.sendMessage(ChatColor.GREEN + "You have been given a " + rarity.getColor() + gun.name);
+        player.sendMessage(ChatColor.GREEN + "You have been given a " + rarity.getColor() + ChatColor.BOLD + gun.name);
+    }
+
+    public ItemStack getItem() {
+        return item;
     }
 
 }
