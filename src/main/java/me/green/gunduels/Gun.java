@@ -1,14 +1,17 @@
 package me.green.gunduels;
 
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Gun {
+    String prefix = GunDuels.getPrefix();
 
     private final ItemStack item;
     private final String name;
@@ -35,7 +38,7 @@ public class Gun {
 
     public void giveGun(Player player, Gun gun) {
         player.getInventory().addItem(gun.item);
-        player.sendMessage(ChatColor.GREEN + "You have been given a " + rarity.getColor() + ChatColor.BOLD + gun.name);
+        player.sendMessage(prefix + ChatColor.GREEN + "You have been given a " + rarity.getColor() + ChatColor.BOLD + gun.name);
     }
 
     public ItemStack getItem() {

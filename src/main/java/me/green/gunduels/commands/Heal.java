@@ -1,5 +1,6 @@
 package me.green.gunduels.commands;
 
+import me.green.gunduels.GunDuels;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,10 +18,11 @@ public class Heal implements CommandExecutor {
             sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
             return true;
         }
+        String prefix = GunDuels.getPrefix();
         Player player = (Player) sender;
         player.setHealth(((Player) sender).getMaxHealth());
         player.setFoodLevel(20);
-        player.sendMessage(ChatColor.GREEN + "You have been healed!");
+        player.sendMessage(prefix + ChatColor.GREEN + "You have been healed!");
         return true;
     }
 }
