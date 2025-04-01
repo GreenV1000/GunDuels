@@ -2,6 +2,8 @@ package me.green.gunduels;
 
 import me.green.gunduels.commands.GiveGun;
 import me.green.gunduels.commands.Heal;
+import me.green.gunduels.commands.JoinDuel;
+import me.green.gunduels.commands.LeaveDuel;
 import me.green.gunduels.listeners.HitByBullet;
 import me.green.gunduels.listeners.HitByHook;
 import me.green.gunduels.listeners.MenuListener;
@@ -28,6 +30,8 @@ public final class GunDuels extends JavaPlugin {
 
         getCommand("heal").setExecutor(new Heal());
         getCommand("givegun").setExecutor(new GiveGun());
+        getCommand("joinduel").setExecutor(new JoinDuel());
+        getCommand("leaveduel").setExecutor(new LeaveDuel());
 
         getServer().getPluginManager().registerEvents(new HitByBullet(), this);
         getServer().getPluginManager().registerEvents(new ShootGun(), this);
@@ -48,6 +52,5 @@ public final class GunDuels extends JavaPlugin {
 
     public static String getPrefix() {
         return ChatColor.translateAlternateColorCodes('&', getInstance().getConfig().getString("prefix"));
-
     }
 }

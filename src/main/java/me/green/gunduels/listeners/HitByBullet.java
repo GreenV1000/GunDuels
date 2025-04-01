@@ -24,9 +24,9 @@ public class HitByBullet implements Listener {
 
         LivingEntity entity = (LivingEntity) event.getEntity();
 
+        entity.setNoDamageTicks(0);
         event.setDamage(8);
         entity.getWorld().playEffect(event.getEntity().getLocation(), Effect.EXPLOSION_HUGE, 1);
-        entity.setNoDamageTicks(0);
         Snowball sb = (Snowball) event.getDamager();
         Player shooter = (Player) sb.getShooter();
         shooter.playSound(shooter.getLocation(), Sound.ANVIL_LAND, 5, 1);

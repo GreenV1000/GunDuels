@@ -22,9 +22,7 @@ public class MenuListener implements Listener {
             return;
         }
             event.setCancelled(true);
-
             Player player = (Player) event.getWhoClicked();
-
             switch (event.getRawSlot()) {
                 case 0:
                     gun.giveGun(player, gun);

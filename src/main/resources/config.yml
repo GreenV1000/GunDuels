@@ -1,1 +1,10 @@
 prefix: "&6[GD] "
+duelWorld: "world"
+team1Spawn:
+  x: 0
+  y: 0
+  z: 0
+team2Spawn:
+  x: 0
+  y: 0
+  z: 0
