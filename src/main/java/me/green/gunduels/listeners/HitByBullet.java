@@ -1,5 +1,6 @@
 package me.green.gunduels.listeners;
 
+import me.green.gunduels.DuelManager;
 import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
@@ -17,12 +18,24 @@ public class HitByBullet implements Listener {
         if (!(event.getDamager().getType() == EntityType.SNOWBALL)) {
             return;
         }
-
         if (!(event.getDamager().hasMetadata("isBullet") && event.getDamager().getMetadata("isBullet").get(0).asBoolean())) {
             return;
         }
 
+        Snowball snowball = (Snowball) event.getDamager();
         LivingEntity entity = (LivingEntity) event.getEntity();
+        Player player = (Player) snowball.getShooter();
+
+        if (DuelManager.getInstance().getTeam1Players().contains(player.getUniqueId()) && DuelManager.getInstance().getTeam1Players().contains(entity.getUniqueId())) {
+            event.setCancelled(true);
+            return;
+        }
+        if (DuelManager.getInstance().getTeam2Players().contains(player.getUniqueId()) && DuelManager.getInstance().getTeam2Players().contains(entity.getUniqueId())) {
+            event.setCancelled(true);
+            return;
+        }
+
+
 
         entity.setNoDamageTicks(0);
         event.setDamage(8);

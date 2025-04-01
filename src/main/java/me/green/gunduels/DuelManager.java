@@ -69,6 +69,14 @@ public class DuelManager {
         Team2Players.add(playerUUID);
     }
 
+    public List<UUID> getTeam1Players() {
+        return team1Players;
+    }
+
+    public List<UUID> getTeam2Players() {
+        return Team2Players;
+    }
+
     public void removeDuelPlayer(UUID playerUUID) {
         team1Players.remove(playerUUID);
         Team2Players.remove(playerUUID);
