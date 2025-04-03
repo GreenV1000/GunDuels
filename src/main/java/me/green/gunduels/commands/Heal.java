@@ -14,6 +14,7 @@ public class Heal implements CommandExecutor {
             sender.sendMessage(ChatColor.RED + "Only players can use this command!");
             return true;
         }
+
         if (!sender.hasPermission("gunduels.admin")) {
             sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
             return true;

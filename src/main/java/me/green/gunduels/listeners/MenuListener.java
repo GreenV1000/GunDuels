@@ -20,21 +20,23 @@ public class MenuListener implements Listener {
         }
 
         event.setCancelled(true);
-        for (int slot : GunInventory.getGunMap().keySet()) {
-                event.setCancelled(true);
-                Player player = (Player) event.getWhoClicked();
-                Gun selectedGun = GunInventory.getGunFromSlot(event.getRawSlot() + 1);
-                if (selectedGun != null) {
-                    selectedGun.giveGun(player, selectedGun);
-                    player.closeInventory();
-                }
-                return;
-        }
-        if (event.getRawSlot() == 44) {
-            event.setCancelled(true);
-            Player player = (Player) event.getWhoClicked();
+
+        Player player = (Player) event.getWhoClicked();
+        ItemStack item = event.getCurrentItem();
+
+        if (item == null || item.getType() == Material.AIR)
+            return;
+
+        for (Gun gun : GunInventory.getGunMap().values()) {
+            if (item.getType() != gun.getItem().getType())
+                continue;
+
+            gun.giveGun(player);
             player.closeInventory();
         }
+
+        if (event.getRawSlot() == 44)
+            player.closeInventory();
     }
 
 }

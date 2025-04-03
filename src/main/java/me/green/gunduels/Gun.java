@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Gun {
-    String prefix = GunDuels.getPrefix();
 
     private final ItemStack item;
     private final String name;
@@ -39,9 +38,9 @@ public class Gun {
         item.setItemMeta(meta);
     }
 
-    public void giveGun(Player player, Gun gun) {
-        player.getInventory().addItem(gun.item);
-        player.sendMessage(prefix + ChatColor.GREEN + "You have been given a " + rarity.getColor() + ChatColor.BOLD + gun.name);
+    public void giveGun(Player player) {
+        player.getInventory().addItem(item);
+        player.sendMessage(GunDuels.getPrefix() + ChatColor.GREEN + "You have been given a " + rarity.getColor() + ChatColor.BOLD + name);
     }
 
     public ItemStack getItem() {

@@ -21,10 +21,12 @@ public class GiveGun implements CommandExecutor{
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
-        if (!(sender instanceof Player player)) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage(ChatColor.RED + "Only players can use this command!");
             return true;
         }
+
+        Player player = (Player) sender;
         if (!sender.hasPermission("gunduels.admin")) {
             sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
             return true;
@@ -40,10 +42,10 @@ public class GiveGun implements CommandExecutor{
 
         switch (args[0].toLowerCase()) {
             case "gun":
-                gun.giveGun(player, gun);
+                gun.giveGun(player);
                 return true;
             case "hook":
-                hook.giveGun(player, hook);
+                hook.giveGun(player);
                 return true;
             default:
                 player.sendMessage(ChatColor.RED + "Usage: /givegun <Gun>");

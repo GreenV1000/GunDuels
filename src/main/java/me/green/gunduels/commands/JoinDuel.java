@@ -13,10 +13,13 @@ import java.util.UUID;
 public class JoinDuel implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (!(sender instanceof Player player)) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage(ChatColor.RED + "Only players can use this command!");
             return true;
         }
+
+        Player player = (Player) sender;
+
         if (!sender.hasPermission("gunduels.join")) {
             sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
             return true;

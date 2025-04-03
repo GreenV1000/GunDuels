@@ -3,6 +3,7 @@ package me.green.gunduels;
 import org.bukkit.ChatColor;
 
 public enum GunRarity {
+
     COMMON(ChatColor.WHITE),
     UNCOMMON(ChatColor.GREEN),
     RARE(ChatColor.BLUE),
@@ -15,6 +16,7 @@ public enum GunRarity {
     GunRarity(ChatColor color) {
         this.color = color;
     }
+
     public ChatColor getColor() {
         return color;
     }
