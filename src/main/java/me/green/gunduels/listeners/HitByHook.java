@@ -1,5 +1,8 @@
 package me.green.gunduels.listeners;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import me.green.gunduels.DuelManager;
 import me.green.gunduels.GunDuels;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,9 +14,14 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
+import java.sql.Time;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
 public class HitByHook implements Listener {
 
     Plugin plugin = GunDuels.getInstance();
+    private final Cache<UUID, Long> cooldown = CacheBuilder.newBuilder().expireAfterWrite(15 , TimeUnit.SECONDS).build();
 
     @EventHandler
     public void hitByHook(EntityDamageByEntityEvent event) {
@@ -26,14 +34,29 @@ public class HitByHook implements Listener {
         Entity entity = event.getEntity();
         ItemStack helditem = player.getItemInHand();
 
+        if (cooldown.asMap().containsKey(player.getUniqueId())) {
+            long cooldownTime = cooldown.asMap().get(player.getUniqueId()) - System.currentTimeMillis();
+            player.sendMessage(ChatColor.RED + "You are on cooldown for " + TimeUnit.MILLISECONDS.toSeconds(cooldownTime) + " seconds.");
+            event.setCancelled(true);
+            return;
+        }
+
         if (!(helditem.getItemMeta().hasLore() && helditem.getItemMeta().getLore().contains(ChatColor.WHITE + "This is a hook"))) {
+            return;
+        }
+
+        if (DuelManager.getInstance().getTeam1Players().contains(player.getUniqueId()) && DuelManager.getInstance().getTeam1Players().contains(entity.getUniqueId())) {
+            event.setCancelled(true);
+            return;
+        }
+        if (DuelManager.getInstance().getTeam2Players().contains(player.getUniqueId()) && DuelManager.getInstance().getTeam2Players().contains(entity.getUniqueId())) {
+            event.setCancelled(true);
             return;
         }
 
         event.setDamage(8);
         hook.remove();
-
-
+        cooldown.put(player.getUniqueId(), System.currentTimeMillis() + 15000);
         player.sendMessage(ChatColor.GREEN + "Teleporting to " + entity.getName() + " in 3 seconds...");
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             player.sendMessage(ChatColor.GREEN + "Teleporting to " + entity.getName() + " in 2 seconds...");

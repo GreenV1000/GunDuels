@@ -32,24 +32,7 @@ public class GiveGun implements CommandExecutor{
             return true;
         }
 
-        Gun gun = Gun.getGun("gun");
-        Gun hook = Gun.getGun("hook");
-
-        if (args.length < 1) {
-            player.openInventory(GunInventory.gunInventory());
-            return true;
-        }
-
-        switch (args[0].toLowerCase()) {
-            case "gun":
-                gun.giveGun(player);
-                return true;
-            case "hook":
-                hook.giveGun(player);
-                return true;
-            default:
-                player.sendMessage(ChatColor.RED + "Usage: /givegun <Gun>");
-                return true;
-        }
+        player.openInventory(GunInventory.gunInventory());
+        return true;
     }
 }

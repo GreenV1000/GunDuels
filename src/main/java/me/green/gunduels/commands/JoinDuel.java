@@ -26,7 +26,6 @@ public class JoinDuel implements CommandExecutor {
 
         DuelManager duelManager = DuelManager.getInstance();
         UUID playerId = player.getUniqueId();
-        String prefix = GunDuels.getPrefix();
 
         if (args.length < 1) {
             player.sendMessage(ChatColor.RED + "Usage: /joinduel <team>");
