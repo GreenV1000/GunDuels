@@ -1,10 +1,7 @@
 package me.green.gunduels;
 
 import me.green.gunduels.commands.*;
-import me.green.gunduels.listeners.HitByBullet;
-import me.green.gunduels.listeners.HitByHook;
-import me.green.gunduels.listeners.MenuListener;
-import me.green.gunduels.listeners.ShootGun;
+import me.green.gunduels.listeners.*;
 import me.green.gunduels.recipes.GunRecipe;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,6 +29,7 @@ public final class GunDuels extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ShootGun(), this);
         getServer().getPluginManager().registerEvents(new HitByHook(), this);
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
+        getServer().getPluginManager().registerEvents(new DeathInDuel(), this);
 
         Bukkit.addRecipe(GunRecipe.gunRecipe());
 

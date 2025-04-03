@@ -21,16 +21,16 @@ public class DuelManager {
         return instance;
     }
 
-    Plugin plugin = GunDuels.getInstance();
-    FileConfiguration config = plugin.getConfig();
-    World duelWorld = plugin.getServer().getWorld(config.getString("duelWorld"));
+    private Plugin plugin = GunDuels.getInstance();
+    private FileConfiguration config = plugin.getConfig();
+    private World duelWorld = plugin.getServer().getWorld(config.getString("duelWorld"));
 
-    HashMap<UUID, ItemStack[]> playerInv = new HashMap<>();
-    HashMap<UUID, Location> playerLoc = new HashMap<>();
-    List<UUID> team1Players = new ArrayList<>();
-    List<UUID> Team2Players = new ArrayList<>();
-    Location team1Spawn = new Location(duelWorld, config.getDouble("team1Spawn.x"), config.getDouble("team1Spawn.y"), config.getDouble("team1Spawn.z"));
-    Location team2Spawn = new Location(duelWorld, config.getDouble("team2Spawn.x"), config.getDouble("team2Spawn.y"), config.getDouble("team2Spawn.z"));
+    private HashMap<UUID, ItemStack[]> playerInv = new HashMap<>();
+    private HashMap<UUID, Location> playerLoc = new HashMap<>();
+    private List<UUID> team1Players = new ArrayList<>();
+    private List<UUID> Team2Players = new ArrayList<>();
+    private Location team1Spawn = new Location(duelWorld, config.getDouble("team1Spawn.x"), config.getDouble("team1Spawn.y"), config.getDouble("team1Spawn.z"));
+    private Location team2Spawn = new Location(duelWorld, config.getDouble("team2Spawn.x"), config.getDouble("team2Spawn.y"), config.getDouble("team2Spawn.z"));
 
     public void storePlayerInv(UUID playerUUID, Inventory inventory) {
         playerInv.put(playerUUID, inventory.getContents());
@@ -90,10 +90,14 @@ public class DuelManager {
         }
     }
 
+    public Boolean isInDuel(UUID playerUUID) {
+        return playerInv.containsKey(playerUUID);
+    }
+
     public void joinDuel(UUID playerUUID, String team) {
         Player player = plugin.getServer().getPlayer(playerUUID);
         String prefix = GunDuels.getPrefix();
-        if (playerInv.containsKey(playerUUID)) {
+        if (isInDuel(playerUUID)) {
             player.sendMessage(prefix + ChatColor.RED + "You are already in a duel!");
             return;
         }

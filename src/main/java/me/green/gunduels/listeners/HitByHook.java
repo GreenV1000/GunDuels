@@ -25,14 +25,24 @@ public class HitByHook implements Listener {
 
     @EventHandler
     public void hitByHook(EntityDamageByEntityEvent event) {
-        if (!(event.getDamager().getType() == EntityType.FISHING_HOOK)) {
-            return;
-        }
 
         FishHook hook = (FishHook) event.getDamager();
         Player player = (Player) hook.getShooter();
         Entity entity = event.getEntity();
         ItemStack helditem = player.getItemInHand();
+
+        if (DuelManager.getInstance().getTeam1Players().contains(player.getUniqueId()) && DuelManager.getInstance().getTeam1Players().contains(entity.getUniqueId())) {
+            event.setCancelled(true);
+            return;
+        }
+        if (DuelManager.getInstance().getTeam2Players().contains(player.getUniqueId()) && DuelManager.getInstance().getTeam2Players().contains(entity.getUniqueId())) {
+            event.setCancelled(true);
+            return;
+        }
+
+        if (!(event.getDamager().getType() == EntityType.FISHING_HOOK)) {
+            return;
+        }
 
         if (cooldown.asMap().containsKey(player.getUniqueId())) {
             long cooldownTime = cooldown.asMap().get(player.getUniqueId()) - System.currentTimeMillis();
@@ -42,15 +52,6 @@ public class HitByHook implements Listener {
         }
 
         if (!(helditem.getItemMeta().hasLore() && helditem.getItemMeta().getLore().contains(ChatColor.WHITE + "This is a hook"))) {
-            return;
-        }
-
-        if (DuelManager.getInstance().getTeam1Players().contains(player.getUniqueId()) && DuelManager.getInstance().getTeam1Players().contains(entity.getUniqueId())) {
-            event.setCancelled(true);
-            return;
-        }
-        if (DuelManager.getInstance().getTeam2Players().contains(player.getUniqueId()) && DuelManager.getInstance().getTeam2Players().contains(entity.getUniqueId())) {
-            event.setCancelled(true);
             return;
         }
 
