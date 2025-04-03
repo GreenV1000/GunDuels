@@ -8,6 +8,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Gun {
@@ -17,6 +18,8 @@ public class Gun {
     private final String name;
     private final GunRarity rarity;
     private final String description;
+
+    private static final HashMap<String, Gun> guns = new HashMap<>();
 
     public Gun(ItemStack item, String name, GunRarity rarity, String description) {
         this.item = item;
@@ -43,6 +46,18 @@ public class Gun {
 
     public ItemStack getItem() {
         return item;
+    }
+
+    public static void registerGun(String key, Gun gun) {
+        guns.put(key, gun);
+    }
+
+    public static Gun getGun(String key) {
+        return guns.get(key);
+    }
+
+    public static List<Gun> getGuns() {
+        return new ArrayList<>(guns.values());
     }
 
 }

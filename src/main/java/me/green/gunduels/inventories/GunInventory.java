@@ -9,35 +9,29 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GunInventory {
 
-    public static Inventory gunInventory() {
-        Gun gun = new Gun(new ItemStack(Material.IRON_BARDING), "Gun", GunRarity.COMMON, "This is a gun");
-        Gun hook = new Gun(new ItemStack(Material.FISHING_ROD), "Hook", GunRarity.ADMIN, "This is a hook");
+    private static final HashMap<Integer, Gun> gunMap = new HashMap<>();
 
+    public static Inventory gunInventory() {
         Inventory inv = Bukkit.createInventory(null, 45, ChatColor.RED.toString() + ChatColor.BOLD + "Gun Menu");
 
-        ItemStack gunItem = gun.getItem();
-        ItemMeta gunMeta = gunItem.getItemMeta();
-        List<String> gunLore = gunMeta.getLore();
-        gunLore.add("");
-        gunLore.add(ChatColor.GOLD + "Click to receive this gun");
-        gunMeta.setLore(gunLore);
-        gunItem.setItemMeta(gunMeta);
-        inv.setItem(0, gunItem);
-
-        ItemStack hookItem = hook.getItem();
-        ItemMeta hookMeta = hookItem.getItemMeta();
-        List<String> hookLore = hookMeta.getLore();
-        hookLore.add("");
-        hookLore.add(ChatColor.GOLD + "Click to receive this gun");
-        hookMeta.setLore(hookLore);
-        hookItem.setItemMeta(hookMeta);
-        inv.setItem(1, hookItem);
-
-        // I know I should probably use a loop for this Alfie thanks for letting me know
+        for (Gun gun : Gun.getGuns()) {
+            ItemStack gunItem = gun.getItem();
+            ItemStack gunDisplayItem = new ItemStack(gunItem.getType());
+            ItemMeta gunMeta = gunItem.getItemMeta();
+            List<String> gunLore = gunMeta.getLore();
+            gunLore.add("");
+            gunLore.add(ChatColor.GOLD + "Click to receive this gun");
+            gunMeta.setLore(gunLore);
+            gunDisplayItem.setItemMeta(gunMeta);
+            inv.addItem(gunDisplayItem);
+            gunMap.put(inv.firstEmpty(), gun);
+        }
 
         ItemStack close = new ItemStack(Material.BARRIER);
         ItemMeta closeMeta = close.getItemMeta();
@@ -46,6 +40,14 @@ public class GunInventory {
         inv.setItem(44, close);
 
         return inv;
+    }
+
+    public static Gun getGunFromSlot(int slot) {
+        return gunMap.get(slot);
+    }
+
+    public static HashMap<Integer, Gun> getGunMap() {
+        return gunMap;
     }
 
 }

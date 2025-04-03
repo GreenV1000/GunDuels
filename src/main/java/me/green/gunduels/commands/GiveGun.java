@@ -30,8 +30,8 @@ public class GiveGun implements CommandExecutor{
             return true;
         }
 
-        Gun gun = new Gun(new ItemStack(Material.IRON_BARDING), "Gun", GunRarity.COMMON, "This is a gun");
-        Gun hook = new Gun(new ItemStack(Material.FISHING_ROD), "Hook", GunRarity.ADMIN, "This is a hook");
+        Gun gun = Gun.getGun("gun");
+        Gun hook = Gun.getGun("hook");
 
         if (args.length < 1) {
             player.openInventory(GunInventory.gunInventory());

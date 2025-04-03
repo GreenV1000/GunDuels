@@ -13,29 +13,28 @@ import org.bukkit.inventory.ItemStack;
 
 public class MenuListener implements Listener {
 
-    Gun gun = new Gun(new ItemStack(Material.IRON_BARDING), "Gun", GunRarity.COMMON, "This is a gun");
-    Gun hook = new Gun(new ItemStack(Material.FISHING_ROD), "Hook", GunRarity.ADMIN, "This is a hook");
-
     @EventHandler
     public void onMenuClick(InventoryClickEvent event) {
         if (!(event.getInventory().getName().equals(GunInventory.gunInventory().getName()))) {
             return;
         }
+
+        event.setCancelled(true);
+        for (int slot : GunInventory.getGunMap().keySet()) {
+                event.setCancelled(true);
+                Player player = (Player) event.getWhoClicked();
+                Gun selectedGun = GunInventory.getGunFromSlot(event.getRawSlot() + 1);
+                if (selectedGun != null) {
+                    selectedGun.giveGun(player, selectedGun);
+                    player.closeInventory();
+                }
+                return;
+        }
+        if (event.getRawSlot() == 44) {
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
-            switch (event.getRawSlot()) {
-                case 0:
-                    gun.giveGun(player, gun);
-                    break;
-                case 1:
-                    hook.giveGun(player, hook);
-                    break;
-                case 44:
-                    break;
-                default:
-                    return;
-            }
             player.closeInventory();
+        }
     }
 
 }
