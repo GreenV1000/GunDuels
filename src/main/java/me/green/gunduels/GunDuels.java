@@ -5,17 +5,12 @@ import me.green.gunduels.listeners.HitByBullet;
 import me.green.gunduels.listeners.HitByHook;
 import me.green.gunduels.listeners.MenuListener;
 import me.green.gunduels.listeners.ShootGun;
-import me.green.gunduels.recipies.GunRecipie;
+import me.green.gunduels.recipes.GunRecipe;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
-import java.io.IOException;
 
 import static me.green.gunduels.Gun.registerGun;
 
@@ -38,7 +33,7 @@ public final class GunDuels extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new HitByHook(), this);
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
 
-        Bukkit.addRecipe(GunRecipie.gunRecipie());
+        Bukkit.addRecipe(GunRecipe.gunRecipe());
 
         registerGun("gun", new Gun(new ItemStack(Material.IRON_BARDING), "Gun", GunRarity.COMMON, "This is a gun"));
         registerGun("hook", new Gun(new ItemStack(Material.FISHING_ROD), "Hook", GunRarity.ADMIN, "This is a hook"));

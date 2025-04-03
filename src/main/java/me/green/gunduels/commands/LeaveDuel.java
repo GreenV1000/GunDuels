@@ -17,7 +17,6 @@ public class LeaveDuel implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-
         if (!(sender.hasPermission("gunduels.leave"))) {
             sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
             return true;

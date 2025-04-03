@@ -46,6 +46,5 @@ public class HitByHook implements Listener {
             player.teleport(new Location(player.getWorld(), entity.getLocation().getX(), entity.getLocation().getY(), entity.getLocation().getZ(), player.getLocation().getYaw(), player.getLocation().getPitch()));
         }, 60);
 
-
     }
 }

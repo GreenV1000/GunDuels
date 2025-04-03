@@ -1,4 +1,4 @@
-package me.green.gunduels.recipies;
+package me.green.gunduels.recipes;
 
 import me.green.gunduels.Gun;
 import me.green.gunduels.GunRarity;
@@ -6,8 +6,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
-public class GunRecipie {
-    public static ShapedRecipe gunRecipie() {
+public class GunRecipe {
+    public static ShapedRecipe gunRecipe() {
         Gun gun = new Gun(new ItemStack(Material.IRON_BARDING), "Gun", GunRarity.COMMON, "This is a gun");
         ShapedRecipe recipe = new ShapedRecipe(gun.getItem());
         recipe.shape(

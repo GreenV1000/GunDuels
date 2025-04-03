@@ -19,7 +19,6 @@ public class JoinDuel implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-
         if (!sender.hasPermission("gunduels.join")) {
             sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
             return true;
