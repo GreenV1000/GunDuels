@@ -13,6 +13,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.sql.Time;
 import java.util.UUID;
@@ -20,7 +22,12 @@ import java.util.concurrent.TimeUnit;
 
 public class HitByHook implements Listener {
 
-    Plugin plugin = GunDuels.getInstance();
+    private final GunDuels plugin;
+
+    public HitByHook(GunDuels plugin) {
+        this.plugin = plugin;
+    }
+
     private final Cache<UUID, Long> cooldown = CacheBuilder.newBuilder().expireAfterWrite(15 , TimeUnit.SECONDS).build();
 
     @EventHandler
@@ -31,11 +38,11 @@ public class HitByHook implements Listener {
         Entity entity = event.getEntity();
         ItemStack helditem = player.getItemInHand();
 
-        if (DuelManager.getInstance().getTeam1Players().contains(player.getUniqueId()) && DuelManager.getInstance().getTeam1Players().contains(entity.getUniqueId())) {
+        if (GunDuels.getDuelManager().getTeam1Players().contains(player.getUniqueId()) && GunDuels.getDuelManager().getTeam1Players().contains(entity.getUniqueId())) {
             event.setCancelled(true);
             return;
         }
-        if (DuelManager.getInstance().getTeam2Players().contains(player.getUniqueId()) && DuelManager.getInstance().getTeam2Players().contains(entity.getUniqueId())) {
+        if (GunDuels.getDuelManager().getTeam2Players().contains(player.getUniqueId()) && GunDuels.getDuelManager().getTeam2Players().contains(entity.getUniqueId())) {
             event.setCancelled(true);
             return;
         }
@@ -58,17 +65,21 @@ public class HitByHook implements Listener {
         event.setDamage(8);
         hook.remove();
         cooldown.put(player.getUniqueId(), System.currentTimeMillis() + 15000);
-        player.sendMessage(ChatColor.GREEN + "Teleporting to " + entity.getName() + " in 3 seconds...");
-        Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            player.sendMessage(ChatColor.GREEN + "Teleporting to " + entity.getName() + " in 2 seconds...");
-        }, 20);
-        Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            player.sendMessage(ChatColor.GREEN + "Teleporting to " + entity.getName() + " in 1 second...");
-        }, 40);
-        Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            player.sendMessage(ChatColor.GREEN + "Teleporting to " + entity.getName());
-            player.teleport(new Location(player.getWorld(), entity.getLocation().getX(), entity.getLocation().getY(), entity.getLocation().getZ(), player.getLocation().getYaw(), player.getLocation().getPitch()));
-        }, 60);
 
+        BukkitTask runnable = Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
+            int countdown = 3;
+
+            @Override
+            public void run() {
+                if (countdown <= 0) {
+                    player.sendMessage(ChatColor.GREEN + "Teleporting to " + entity.getName());
+                    player.teleport(new Location(player.getWorld(), entity.getLocation().getX(), entity.getLocation().getY(), entity.getLocation().getZ(), player.getLocation().getYaw(), player.getLocation().getPitch()));
+                    return;
+                }
+                    player.sendMessage(ChatColor.GREEN + "Teleporting to " + entity.getName() + " in " + countdown + " seconds...");
+                    countdown--;
+                }
+        },0, 20);
+        Bukkit.getScheduler().runTaskLater(plugin, runnable::cancel, 60);
     }
 }

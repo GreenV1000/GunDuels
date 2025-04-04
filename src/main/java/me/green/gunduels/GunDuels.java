@@ -14,10 +14,13 @@ import static me.green.gunduels.Gun.registerGun;
 public final class GunDuels extends JavaPlugin {
 
     private static GunDuels instance;
+    private static DuelManager duelManager;
 
     @Override
     public void onEnable() {
         instance = this;
+        duelManager = new DuelManager();
+
         saveDefaultConfig();
 
         getCommand("heal").setExecutor(new Heal());
@@ -26,8 +29,8 @@ public final class GunDuels extends JavaPlugin {
         getCommand("leaveduel").setExecutor(new LeaveDuel());
 
         getServer().getPluginManager().registerEvents(new HitByBullet(), this);
-        getServer().getPluginManager().registerEvents(new ShootGun(), this);
-        getServer().getPluginManager().registerEvents(new HitByHook(), this);
+        getServer().getPluginManager().registerEvents(new ShootGun(this), this);
+        getServer().getPluginManager().registerEvents(new HitByHook(this), this);
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
         getServer().getPluginManager().registerEvents(new DeathInDuel(), this);
 
@@ -44,6 +47,10 @@ public final class GunDuels extends JavaPlugin {
 
     public static GunDuels getInstance() {
         return instance;
+    }
+
+    public static DuelManager getDuelManager() {
+        return duelManager;
     }
 
     public static String getPrefix() {

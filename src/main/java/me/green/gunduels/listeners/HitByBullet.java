@@ -1,6 +1,7 @@
 package me.green.gunduels.listeners;
 
 import me.green.gunduels.DuelManager;
+import me.green.gunduels.GunDuels;
 import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
@@ -23,26 +24,24 @@ public class HitByBullet implements Listener {
         }
 
         Snowball snowball = (Snowball) event.getDamager();
-        LivingEntity entity = (LivingEntity) event.getEntity();
+        LivingEntity hitEntity = (LivingEntity) event.getEntity();
         Player player = (Player) snowball.getShooter();
 
-        if (DuelManager.getInstance().getTeam1Players().contains(player.getUniqueId()) && DuelManager.getInstance().getTeam1Players().contains(entity.getUniqueId())) {
+        if (GunDuels.getDuelManager().getTeam1Players().contains(player.getUniqueId()) && GunDuels.getDuelManager().getTeam1Players().contains(hitEntity.getUniqueId())) {
             event.setCancelled(true);
             return;
         }
-        if (DuelManager.getInstance().getTeam2Players().contains(player.getUniqueId()) && DuelManager.getInstance().getTeam2Players().contains(entity.getUniqueId())) {
+        if (GunDuels.getDuelManager().getTeam2Players().contains(player.getUniqueId()) && GunDuels.getDuelManager().getTeam2Players().contains(hitEntity.getUniqueId())) {
             event.setCancelled(true);
             return;
         }
 
 
 
-        entity.setNoDamageTicks(0);
+        hitEntity.setNoDamageTicks(0);
         event.setDamage(8);
-        entity.getWorld().playEffect(event.getEntity().getLocation(), Effect.EXPLOSION_HUGE, 1);
-        Snowball sb = (Snowball) event.getDamager();
-        Player shooter = (Player) sb.getShooter();
-        shooter.playSound(shooter.getLocation(), Sound.ANVIL_LAND, 5, 1);
+        hitEntity.getWorld().playEffect(event.getEntity().getLocation(), Effect.EXPLOSION_HUGE, 1);
+        player.playSound(player.getLocation(), Sound.ANVIL_LAND, 5, 1);
     }
 
 }

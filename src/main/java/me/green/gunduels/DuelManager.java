@@ -12,25 +12,15 @@ import org.bukkit.plugin.Plugin;
 import java.util.*;
 
 public class DuelManager {
-
-    private static DuelManager instance;
-    public static DuelManager getInstance() {
-        if (instance == null) {
-            instance = new DuelManager();
-        }
-        return instance;
-    }
-
     private Plugin plugin = GunDuels.getInstance();
     private FileConfiguration config = plugin.getConfig();
-    private World duelWorld = plugin.getServer().getWorld(config.getString("duelWorld"));
 
     private HashMap<UUID, ItemStack[]> playerInv = new HashMap<>();
     private HashMap<UUID, Location> playerLoc = new HashMap<>();
     private List<UUID> team1Players = new ArrayList<>();
     private List<UUID> Team2Players = new ArrayList<>();
-    private Location team1Spawn = new Location(duelWorld, config.getDouble("team1Spawn.x"), config.getDouble("team1Spawn.y"), config.getDouble("team1Spawn.z"));
-    private Location team2Spawn = new Location(duelWorld, config.getDouble("team2Spawn.x"), config.getDouble("team2Spawn.y"), config.getDouble("team2Spawn.z"));
+    private Location team1Spawn = new Location(plugin.getServer().getWorld(config.getString("duelWorld")), config.getDouble("team1Spawn.x"), config.getDouble("team1Spawn.y"), config.getDouble("team1Spawn.z"));
+    private Location team2Spawn = new Location(plugin.getServer().getWorld(config.getString("duelWorld")), config.getDouble("team2Spawn.x"), config.getDouble("team2Spawn.y"), config.getDouble("team2Spawn.z"));
 
     public void storePlayerInv(UUID playerUUID, Inventory inventory) {
         playerInv.put(playerUUID, inventory.getContents());
@@ -46,7 +36,6 @@ public class DuelManager {
         }
         plugin.getServer().getPlayer(playerUUID).getInventory().setContents(playerInv.get(playerUUID));
         playerInv.remove(playerUUID);
-        return;
     }
 
     public void returnPlayerLoc(UUID playerUUID) {
@@ -54,11 +43,11 @@ public class DuelManager {
         if (!(playerLoc.containsKey(playerUUID))) {
             return;
         }
-        if (location != null) {
-            plugin.getServer().getPlayer(playerUUID).teleport(location);
-            playerLoc.remove(playerUUID);
+        if (location == null) {
+            return;
         }
-        return;
+        plugin.getServer().getPlayer(playerUUID).teleport(location);
+        playerLoc.remove(playerUUID);
     }
 
     public void addTeam1Player(UUID playerUUID) {
@@ -96,9 +85,8 @@ public class DuelManager {
 
     public void joinDuel(UUID playerUUID, String team) {
         Player player = plugin.getServer().getPlayer(playerUUID);
-        String prefix = GunDuels.getPrefix();
         if (isInDuel(playerUUID)) {
-            player.sendMessage(prefix + ChatColor.RED + "You are already in a duel!");
+            player.sendMessage(GunDuels.getPrefix() + ChatColor.RED + "You are already in a duel!");
             return;
         }
         if (team.equalsIgnoreCase("1")) {
@@ -107,31 +95,28 @@ public class DuelManager {
             player.getInventory().clear();
             addTeam1Player(playerUUID);
             teleportPlayer(playerUUID);
-            player.sendMessage(prefix + ChatColor.GREEN + "You have joined team 1!");
-        } else if (team.equalsIgnoreCase("2")) {
+            player.sendMessage(GunDuels.getPrefix() + ChatColor.GREEN + "You have joined team 1!");
+        }
+        if (team.equalsIgnoreCase("2")) {
             storePlayerLoc(playerUUID, player.getLocation());
             storePlayerInv(playerUUID, plugin.getServer().getPlayer(playerUUID).getInventory());
             player.getInventory().clear();
             addTeam2Player(playerUUID);
             teleportPlayer(playerUUID);
-            player.sendMessage(prefix + ChatColor.GREEN + "You have joined team 2!");
-        } else {
-            return;
+            player.sendMessage(GunDuels.getPrefix() + ChatColor.GREEN + "You have joined team 2!");
         }
-
     }
-
     public void leaveDuel(UUID playerUUID) {
         Player player = plugin.getServer().getPlayer(playerUUID);
-        String prefix = GunDuels.getPrefix();
         if (playerInv.containsKey(playerUUID)) {
             returnPlayerLoc(playerUUID);
             returnPlayerInv(playerUUID);
             removeDuelPlayer(playerUUID);
-            player.sendMessage(prefix + ChatColor.GREEN + "You have left the duel!");
-        } else {
-            player.sendMessage(prefix + ChatColor.RED + "You are not in a duel!");
+            player.sendMessage(GunDuels.getPrefix() + ChatColor.GREEN + "You have left the duel!");
+            return;
         }
+        player.sendMessage(GunDuels.getPrefix() + ChatColor.RED + "You are not in a duel!");
     }
-
 }
+
+

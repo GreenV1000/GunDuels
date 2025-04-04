@@ -21,8 +21,8 @@ public class LeaveDuel implements CommandExecutor {
             sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
             return true;
         }
-        String prefix = GunDuels.getPrefix();
-        DuelManager.getInstance().leaveDuel(player.getUniqueId());
+        GunDuels.getDuelManager().leaveDuel(player.getUniqueId());
+        player.sendMessage(GunDuels.getPrefix() + ChatColor.GREEN + "You have left the duel!");
         return true;
     }
 }

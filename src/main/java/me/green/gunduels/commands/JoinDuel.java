@@ -24,22 +24,21 @@ public class JoinDuel implements CommandExecutor {
             return true;
         }
 
-        DuelManager duelManager = DuelManager.getInstance();
         UUID playerId = player.getUniqueId();
 
         if (args.length < 1) {
-            player.sendMessage(ChatColor.RED + "Usage: /joinduel <team>");
+            player.sendMessage(GunDuels.getPrefix() + ChatColor.RED + "Usage: /joinduel <team>");
             return true;
         }
         switch (args[0]) {
             case "1":
-                duelManager.joinDuel(playerId, args[0]);
+                GunDuels.getDuelManager().joinDuel(playerId, args[0]);
                 break;
             case "2":
-                duelManager.joinDuel(playerId, args[0]);
+                GunDuels.getDuelManager().joinDuel(playerId, args[0]);
                 break;
             default:
-                player.sendMessage(ChatColor.RED + "Usage: /joinduel <team>");
+                player.sendMessage(GunDuels.getPrefix() + ChatColor.RED + "Usage: /joinduel <team>");
                 return true;
         }
 

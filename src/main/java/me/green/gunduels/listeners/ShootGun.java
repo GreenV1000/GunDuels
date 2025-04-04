@@ -16,6 +16,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class ShootGun implements Listener {
 
+    private final GunDuels plugin;
+
+    public ShootGun(GunDuels plugin) {
+        this.plugin = plugin;
+    }
+
     @EventHandler
     public void onShootGun(PlayerInteractEvent event) {
         if (!(event.getAction() == Action.RIGHT_CLICK_AIR)) {
@@ -33,10 +39,10 @@ public class ShootGun implements Listener {
             return;
         }
 
-        Snowball sb = Bukkit.getWorld(player.getWorld().getName()).spawn(player.getEyeLocation(), Snowball.class);
-        sb.setShooter(player);
-        sb.setMetadata("isBullet", new FixedMetadataValue(GunDuels.getInstance(), true));
-        sb.setVelocity(player.getLocation().getDirection().multiply(1.5));
+        Snowball snowball = Bukkit.getWorld(player.getWorld().getName()).spawn(player.getEyeLocation(), Snowball.class);
+        snowball.setShooter(player);
+        snowball.setMetadata("isBullet", new FixedMetadataValue(plugin, true));
+        snowball.setVelocity(player.getLocation().getDirection().multiply(1.5));
     }
 
 }

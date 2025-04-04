@@ -41,13 +41,7 @@ public class GunInventory {
 
         return inv;
     }
-
-    public static Gun getGunFromSlot(int slot) {
-        return gunMap.get(slot);
-    }
-
     public static HashMap<Integer, Gun> getGunMap() {
         return gunMap;
     }
-
 }

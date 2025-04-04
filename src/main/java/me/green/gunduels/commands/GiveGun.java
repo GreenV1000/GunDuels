@@ -31,7 +31,6 @@ public class GiveGun implements CommandExecutor{
             sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
             return true;
         }
-
         player.openInventory(GunInventory.gunInventory());
         return true;
     }
