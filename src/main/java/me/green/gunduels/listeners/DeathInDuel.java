@@ -1,6 +1,5 @@
 package me.green.gunduels.listeners;
 
-import me.green.gunduels.DuelManager;
 import me.green.gunduels.GunDuels;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

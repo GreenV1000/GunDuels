@@ -2,7 +2,6 @@ package me.green.gunduels.listeners;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import me.green.gunduels.DuelManager;
 import me.green.gunduels.GunDuels;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,11 +11,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.sql.Time;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 

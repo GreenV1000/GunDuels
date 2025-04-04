@@ -1,9 +1,7 @@
 package me.green.gunduels.listeners;
 
 import me.green.gunduels.Gun;
-import me.green.gunduels.GunRarity;
 import me.green.gunduels.inventories.GunInventory;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

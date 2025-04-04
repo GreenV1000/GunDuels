@@ -1,7 +1,6 @@
 package me.green.gunduels.inventories;
 
 import me.green.gunduels.Gun;
-import me.green.gunduels.GunRarity;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -11,7 +10,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class GunInventory {
 

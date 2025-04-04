@@ -1,6 +1,5 @@
 package me.green.gunduels.commands;
 
-import me.green.gunduels.DuelManager;
 import me.green.gunduels.GunDuels;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
