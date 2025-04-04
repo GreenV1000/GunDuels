@@ -11,15 +11,15 @@ import org.bukkit.plugin.Plugin;
 import java.util.*;
 
 public class DuelManager {
-    private Plugin plugin = GunDuels.getInstance();
-    private FileConfiguration config = plugin.getConfig();
+    private final Plugin plugin = GunDuels.getInstance();
+    private final FileConfiguration config = plugin.getConfig();
 
-    private HashMap<UUID, ItemStack[]> playerInv = new HashMap<>();
-    private HashMap<UUID, Location> playerLoc = new HashMap<>();
-    private List<UUID> team1Players = new ArrayList<>();
-    private List<UUID> Team2Players = new ArrayList<>();
-    private Location team1Spawn = new Location(plugin.getServer().getWorld(config.getString("duelWorld")), config.getDouble("team1Spawn.x"), config.getDouble("team1Spawn.y"), config.getDouble("team1Spawn.z"));
-    private Location team2Spawn = new Location(plugin.getServer().getWorld(config.getString("duelWorld")), config.getDouble("team2Spawn.x"), config.getDouble("team2Spawn.y"), config.getDouble("team2Spawn.z"));
+    private final HashMap<UUID, ItemStack[]> playerInv = new HashMap<>();
+    private final HashMap<UUID, Location> playerLoc = new HashMap<>();
+    private final List<UUID> team1Players = new ArrayList<>();
+    private final List<UUID> Team2Players = new ArrayList<>();
+    private final Location team1Spawn = new Location(plugin.getServer().getWorld(config.getString("duelWorld")), config.getDouble("team1Spawn.x"), config.getDouble("team1Spawn.y"), config.getDouble("team1Spawn.z"));
+    private final Location team2Spawn = new Location(plugin.getServer().getWorld(config.getString("duelWorld")), config.getDouble("team2Spawn.x"), config.getDouble("team2Spawn.y"), config.getDouble("team2Spawn.z"));
 
     public void storePlayerInv(UUID playerUUID, Inventory inventory) {
         playerInv.put(playerUUID, inventory.getContents());
