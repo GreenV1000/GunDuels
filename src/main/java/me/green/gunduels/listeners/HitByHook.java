@@ -28,9 +28,14 @@ public class HitByHook implements Listener {
 
     @EventHandler
     public void hitByHook(EntityDamageByEntityEvent event) {
+        if (!(event.getDamager().getType() == EntityType.FISHING_HOOK)) {
+            return;
+        }
 
-        Player player = (Player) event.getDamager();
         Entity entity = event.getEntity();
+        FishHook hook = (FishHook) event.getDamager();
+        Player player = (Player) hook.getShooter();
+        ItemStack helditem = player.getItemInHand();
 
         if (GunDuels.getDuelManager().getTeam1Players().contains(player.getUniqueId()) && GunDuels.getDuelManager().getTeam1Players().contains(entity.getUniqueId())) {
             event.setCancelled(true);
@@ -41,18 +46,10 @@ public class HitByHook implements Listener {
             return;
         }
 
-        if (!(event.getDamager().getType() == EntityType.FISHING_HOOK)) {
-            return;
-        }
 
-
-        FishHook hook = (FishHook) event.getDamager();
-        Player shooter = (Player) hook.getShooter();
-        ItemStack helditem = shooter.getItemInHand();
-
-        if (cooldown.asMap().containsKey(shooter.getUniqueId())) {
-            long cooldownTime = cooldown.asMap().get(shooter.getUniqueId()) - System.currentTimeMillis();
-            shooter.sendMessage(ChatColor.RED + "You are on cooldown for " + TimeUnit.MILLISECONDS.toSeconds(cooldownTime) + " seconds.");
+        if (cooldown.asMap().containsKey(player.getUniqueId())) {
+            long cooldownTime = cooldown.asMap().get(player.getUniqueId()) - System.currentTimeMillis();
+            player.sendMessage(ChatColor.RED + "You are on cooldown for " + TimeUnit.MILLISECONDS.toSeconds(cooldownTime) + " seconds.");
             event.setCancelled(true);
             return;
         }
@@ -63,7 +60,7 @@ public class HitByHook implements Listener {
 
         event.setDamage(8);
         hook.remove();
-        cooldown.put(shooter.getUniqueId(), System.currentTimeMillis() + 15000);
+        cooldown.put(player.getUniqueId(), System.currentTimeMillis() + 15000);
 
         BukkitTask runnable = Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
             int countdown = 3;
@@ -71,14 +68,14 @@ public class HitByHook implements Listener {
             @Override
             public void run() {
                 if (countdown <= 0) {
-                    shooter.sendMessage(ChatColor.GREEN + "Teleporting to " + entity.getName());
-                    shooter.teleport(new Location(shooter.getWorld(), entity.getLocation().getX(), entity.getLocation().getY(), entity.getLocation().getZ(), shooter.getLocation().getYaw(), shooter.getLocation().getPitch()));
+                    player.sendMessage(ChatColor.GREEN + "Teleporting to " + entity.getName());
+                    player.teleport(new Location(player.getWorld(), entity.getLocation().getX(), entity.getLocation().getY(), entity.getLocation().getZ(), player.getLocation().getYaw(), player.getLocation().getPitch()));
                     return;
                 }
-                shooter.sendMessage(ChatColor.GREEN + "Teleporting to " + entity.getName() + " in " + countdown + " seconds...");
+                player.sendMessage(ChatColor.GREEN + "Teleporting to " + entity.getName() + " in " + countdown + " seconds...");
                     countdown--;
                 }
         },0, 20);
-        Bukkit.getScheduler().runTaskLater(plugin, runnable::cancel, 60);
+        Bukkit.getScheduler().runTaskLater(plugin, runnable::cancel, 80);
     }
 }
