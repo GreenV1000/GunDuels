@@ -26,7 +26,7 @@ public class MenuListener implements Listener {
             return;
 
         for (Gun gun : GunInventory.getGunMap().values()) {
-            if (item.getType() != gun.getItem().getType())
+            if (!item.isSimilar(gun.getItem()))
                 continue;
 
             gun.giveGun(player);

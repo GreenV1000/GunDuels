@@ -23,8 +23,6 @@ public class GunInventory {
             ItemStack gunDisplayItem = new ItemStack(gunItem.getType());
             ItemMeta gunMeta = gunItem.getItemMeta();
             List<String> gunLore = gunMeta.getLore();
-            gunLore.add("");
-            gunLore.add(ChatColor.GOLD + "Click to receive this gun");
             gunMeta.setLore(gunLore);
             gunDisplayItem.setItemMeta(gunMeta);
             inv.addItem(gunDisplayItem);
