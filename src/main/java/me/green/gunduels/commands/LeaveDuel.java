@@ -21,7 +21,6 @@ public class LeaveDuel implements CommandExecutor {
             return true;
         }
         GunDuels.getDuelManager().leaveDuel(player.getUniqueId());
-        player.sendMessage(GunDuels.getPrefix() + ChatColor.GREEN + "You have left the duel!");
         return true;
     }
 }

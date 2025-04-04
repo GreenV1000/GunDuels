@@ -38,7 +38,7 @@ public class HitByBullet implements Listener {
 
 
         hitEntity.setNoDamageTicks(0);
-        event.setDamage(8);
+        event.setDamage(4);
         hitEntity.getWorld().playEffect(event.getEntity().getLocation(), Effect.EXPLOSION_HUGE, 1);
         player.playSound(player.getLocation(), Sound.ANVIL_LAND, 5, 1);
     }

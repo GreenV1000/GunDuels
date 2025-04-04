@@ -1,6 +1,7 @@
 package me.green.gunduels.listeners;
 
 import me.green.gunduels.GunDuels;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,6 +25,9 @@ public class DeathInDuel implements Listener {
         player.setFoodLevel(20);
         GunDuels.getDuelManager().teleportPlayer(player.getUniqueId());
 
+        GunDuels.getDuelManager().incrementPlayerKill(player.getKiller().getUniqueId());
+        Player killer = player.getKiller();
+        killer.getScoreboard().getTeam("kills").setSuffix(String.valueOf(GunDuels.getDuelManager().getPlayerKills(killer.getUniqueId())));
     }
 
 }

@@ -58,7 +58,7 @@ public class HitByHook implements Listener {
             return;
         }
 
-        event.setDamage(8);
+        event.setDamage(2);
         hook.remove();
         cooldown.put(player.getUniqueId(), System.currentTimeMillis() + 15000);
 

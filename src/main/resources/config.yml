@@ -1,5 +1,6 @@
 prefix: "&6[GD] "
 duelWorld: "world"
+server-ip: "exampleip.com"
 team1Spawn:
   x: 0
   y: 0
